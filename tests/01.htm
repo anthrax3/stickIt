@@ -1,0 +1,96 @@
+<!doctype html>
+<head>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="../jquery.stickIt.js"></script>
+  <link rel="stylesheet" href="qunit.css" type="text/css" media="screen">
+  <script type="text/javascript" src="qunit.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      // SETUP //////////////////////////////////////////////////////
+      var cfg = {
+          containerClass : "stickIt",
+          enabledClass   : "stuck",
+          resetEvent     : "reset.stickIt"
+        },
+        $theEl = $("#myContainer");
+
+      $theEl.stickIt(cfg);
+
+      // TESTS //////////////////////////////////////////////////////
+      test("Initialization", function(){
+        ok($theEl.parent().hasClass(cfg.containerClass), "Target element was wrapped");
+      });
+
+      module("Scrolling", {
+        setup: function() {
+          stop();
+          $("body")
+            .animate({scrollTop : 1500}, 1000, function(){
+              setTimeout(function(){
+                ok($theEl.hasClass(cfg.enabledClass), "Target element has detected scroll");
+                start();
+              }, 100);
+            });
+        },
+        teardown: function() {
+          stop();
+          $("body")
+            .animate({scrollTop : 0}, 1000, function(){
+              setTimeout(function(){
+                ok(!$theEl.hasClass(cfg.enabledClass), "Target element has reset");
+                start();
+              }, 100);
+            });
+        }
+      });
+      test("Update and Reset upon scrolling.", function() {
+        expect(2);
+      });
+
+    });
+  </script>
+  <style>
+    body {
+      height: 1000px;
+    }
+    #myContainer {
+      font: bold 16px/16px arial;
+      width: 250px;
+      height: 1000px;
+      background: rgba(0,0,0,0.7);
+      padding: 10px;
+      margin: 10px;
+      border: 1px solid #000;
+      color: #fff;
+    }
+    .stuck {
+      position: fixed;
+    }
+    #myContainer.stuck {
+      top: 0px;
+      margin:10px;
+      width: 500px;
+      height: 100px;
+      z-index: 9997;
+      -moz-border-radius: 0px 0px 3px 3px;
+      border-radius: 0px 0px 3px 3px;
+      -webkit-box-shadow: 0 0 5px #000;
+      -moz-box-shadow: 0 0 5px #000;
+      box-shadow: 0 0 5px #000;
+    }
+  </style>
+</head>
+  <body>
+    <h1 id="qunit-header">jQuery StickIt Plugin: Test Suite</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <div id="qunit-fixtureZZ">
+      <div id="myContainer">
+        <span>Target Element</span>
+      </div>
+    </div>
+  </body>
+</html>
