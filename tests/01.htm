@@ -25,7 +25,7 @@
       module("Scrolling", {
         setup: function() {
           stop();
-          $("body")
+          $("html, body")
             .animate({scrollTop : 1500}, 1000, function(){
               setTimeout(function(){
                 ok($theEl.hasClass(cfg.enabledClass), "Target element has detected scroll");
@@ -35,7 +35,7 @@
         },
         teardown: function() {
           stop();
-          $("body")
+          $("html, body")
             .animate({scrollTop : 0}, 1000, function(){
               setTimeout(function(){
                 ok(!$theEl.hasClass(cfg.enabledClass), "Target element has reset");
