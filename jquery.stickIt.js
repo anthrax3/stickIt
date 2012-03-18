@@ -36,7 +36,7 @@
           .parent("div." + settings.containerClass)
           .css("height", "auto");
       }
-    };
+    }
 
     //loop through jQuery collection (selected elements) and apply
     return this.each(function () {
